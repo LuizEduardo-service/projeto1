@@ -5,8 +5,6 @@ from django.http.response import HttpResponse
 def home(request):
     return render(request, 'recipes/pages/home.html', context={"name": "Luiz Eduardo"})
 
-def contato(request):
-    return HttpResponse('Tela contato')
+def recipe(request, id: int):
+    return render(request, 'recipes/pages/recipe-view.html', context={"name": "Luiz Eduardo"})
 
-def sobre(request):
-    return HttpResponse('Tela sobre')
