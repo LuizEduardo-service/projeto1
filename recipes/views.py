@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.http.response import HttpResponse
-
+from utils.recipes.factory import make_recipe
 
 def home(request):
-    return render(request, 'recipes/pages/home.html', context={"name": "Luiz Eduardo"})
+    mock_recipes = [make_recipe() for _ in range(10)]
+    return render(request, 'recipes/pages/home.html', context={"recipes": mock_recipes})
 
 def recipe(request, id: int):
-    return render(request, 'recipes/pages/recipe-view.html', context={"name": "Luiz Eduardo"})
+    mock_recipe = make_recipe()
+    return render(request, 'recipes/pages/recipe-view.html', context={"recipe": mock_recipe})
 
