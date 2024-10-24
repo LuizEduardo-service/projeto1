@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 class Category(models.Model):
     name = models.CharField(max_length=65)
 
+    def __str__(self) -> str:
+        return self.name
 
 class Recipe(models.Model):
     title = models.CharField(max_length=65)
@@ -22,3 +24,6 @@ class Recipe(models.Model):
     cover = models.ImageField(upload_to='recipes/covers/%Y/%m/%d')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self) -> str:
+        return self.title
