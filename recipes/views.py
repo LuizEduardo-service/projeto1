@@ -10,7 +10,9 @@ def home(request):
 
 def category(request, category_id: int):
     recipe_category = Recipe.objects.filter(category__id=category_id, is_published = True)
-    return render(request, 'recipes/pages/category.html', context={"recipes": recipe_category})
+    return render(request, 'recipes/pages/category.html',
+                  context={"recipes": recipe_category,
+                           'title': f'{recipe_category.first().category.name}  - Category '})
 
 def recipe(request, id: int):
     # mock_recipe = make_recipe()
