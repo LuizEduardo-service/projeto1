@@ -24,3 +24,5 @@ def recipe(request, id: int):
                   context={"recipe": recipe, 'is_detail_page': True}
                   )
 
+def search(request):
+    return render(request, 'recipes/pages/search.html')
