@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from utils.pagination import make_pagination
 import os
+from django.contrib import messages
 
 PER_PAGE =  int(os.environ.get('PER_PAGE', 6))
 def home(request):
@@ -13,6 +14,7 @@ def home(request):
 
     page_obj, pagination_range = make_pagination(request, recipes, PER_PAGE)
 
+    messages.success(request, "mensagem de sucesso")
     return render(request, 'recipes/pages/home.html', context={"recipes": page_obj, 'pagination_range': pagination_range})
 
 def category(request, category_id: int):
