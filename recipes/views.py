@@ -13,8 +13,6 @@ def home(request):
     recipes = Recipe.objects.filter(is_published= True).all().order_by('-id')
 
     page_obj, pagination_range = make_pagination(request, recipes, PER_PAGE)
-
-    messages.success(request, "mensagem de sucesso")
     return render(request, 'recipes/pages/home.html', context={"recipes": page_obj, 'pagination_range': pagination_range})
 
 def category(request, category_id: int):
