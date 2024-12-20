@@ -22,6 +22,7 @@ class RegisterForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         add_placeholder(self.fields['username'], 'Digite seu nome')
         add_placeholder(self.fields['email'], 'Digite seu email')
+        add_placeholder(self.fields['password'], 'insira sua senha aqui')
 
     password2 = forms.CharField(
         required=True,
@@ -51,14 +52,7 @@ class RegisterForm(forms.ModelForm):
                 'required': 'Esse campo não deve ser vazio',
             }
         }  
-        widgets = {
-            'username': forms.TextInput(attrs={
-                'placeholder': 'insira seu nome de usuario'
-            }),
-            'password': forms.PasswordInput(attrs={
-                'placeholder': 'insira sua senha aqui'
-            })
-        }
+
 
     def clean(self):
         cleaned_data =  super().clean()
