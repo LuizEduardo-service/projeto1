@@ -67,10 +67,28 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_email_field_must_be_unique(self):
-        # self.form_data['email'] = 'email@email.com'
 
         url = reverse('authors:create')
         self.client.post(url, data=self.form_data, follow=True)
         response = self.client.post(url, data=self.form_data, follow=True)
 
         self.assertIn('Email existente na base de dados!', response.context['form'].errors.get('email'))
+
+    
+    def test_author_create_can_login(self):
+        url =reverse('authors:create')
+
+        self.form_data.update({
+            'username': 'usernameTest',
+            'password': '@Pass123',
+            'password2': '@Pass123',
+        }
+        )
+        self.client.post(url,data=self.form_data,follow=True)
+        is_authenticated = self.client.login(
+            username='usernameTest',
+            password='@Pass123',
+        )
+
+        self.assertTrue(is_authenticated)
+
