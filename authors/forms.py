@@ -33,6 +33,18 @@ class RegisterForm(forms.ModelForm):
         ),
         validators=[strong_password]
     )
+
+    first_name = forms.CharField(
+        error_messages={'required': 'Digite seu primeiro nome'},
+        required= True,
+        label= 'Nome'
+    )    
+    last_name = forms.CharField(
+        error_messages={'required': 'Digite seu ultimo nome'},
+        required= True,
+        label= 'Sobrenome'
+    )    
+
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'username','email', 'password']
@@ -53,7 +65,6 @@ class RegisterForm(forms.ModelForm):
             }
         }  
 
-
     def clean(self):
         cleaned_data =  super().clean()
         password = cleaned_data.get('password')
@@ -63,3 +74,13 @@ class RegisterForm(forms.ModelForm):
             raise ValidationError({
                 'password': 'Senhas não conferem'
             })
+        
+    def clean_email(self):
+        email = self.cleaned_data.get('email', '')
+        email_exists = User.objects.filter(email= email).exists()
+
+        if email_exists:
+            raise ValidationError(
+                'Email existente na base de dados!', code='invalid'
+            )
+        return email
